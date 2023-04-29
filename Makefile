@@ -1,13 +1,13 @@
 NAME = pipex
 
-SRC_NAME =	pipex.c
+SRC_NAME =	pipex.c file_handler.c pipe_handler.c utils.c
 
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 RM = rm -f
 
-#$(VERBOSE).SILENT:
+$(VERBOSE).SILENT:
 LIBFT = ./libft/libft.a
 LIBFT_PATH = ./libft
 

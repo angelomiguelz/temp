@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:16:43 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/04/23 15:50:45 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:25:14 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,28 @@
 # include <fcntl.h>
 # include "./ft_printf/ft_printf.h"
 # include "./libft/libft.h"
+
+typedef struct s_data {
+	int	ac;
+	char **av;
+	char **envp;
+	int	infile;
+	int	outfile;
+	pid_t	pid;
+	int	*pipes;
+	int	pipe_quantity;
+	int	pipe_order;
+	int cmds;
+} t_data;
+
+t_data *data(void);
+void	_error(char *s);
+void	get_infile(void);
+void	get_outfile(void);
+void	allocate_pipes();
+void	create_pipes();
+void	close_pipes();
+void	create_forks();
+char	*path_finder();
 
 #endif

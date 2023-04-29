@@ -6,45 +6,16 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/04/25 15:45:44 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:21:54 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pexit(char *s)
+/* void	pexit(char *s)
 {
 	perror(s);
 	exit(1);
-}
-
-
-char	*path_finder(char *cmd, char **envp)
-{
-	char *sub;
-	char **paths;
-	char *cmd_path;
-
-	cmd = *ft_split(cmd, ' ');
-	while (*envp && !ft_strnstr(*envp, "PATH=", 5))
-		envp++;
-	sub = ft_substr(*envp, 5, ft_strlen(*envp) - 5);
-	paths = ft_split(sub, ':');
-	free(sub);
-	sub = ft_strjoin("/", cmd);
-	while (*paths)
-	{
-		cmd_path = ft_strjoin(*paths, sub);
-		if (!cmd_path)
-			return (NULL);
-		if (!access(cmd_path, F_OK))
-			break ;
-		free(cmd_path);
-		paths++;
-	}
-	free(sub);
-	free(cmd);
-	return (cmd_path);	
 }
 
 void	parent_process(int *piepinho, char **av, char **envp)
@@ -73,15 +44,36 @@ void	child_process(int *piepinho, char **av, char **envp)
 	close(piepinho[0]);
 	if (execve(path_finder(av[2], envp), ft_split(av[2], ' '), envp) == -1)
 		exit(1);
+} */
+
+t_data *data(void)
+{
+	static t_data data;
+	return (&data);
+}
+
+void	_error(char *s)
+{
+	perror(s);
+	exit (1);
 }
 
 int main(int ac, char **av, char **envp)
 {
-	pid_t	pid;
-	int	piepinho[2];
+	data()->envp = envp;
+	data()->ac = ac;
+	data()->av = av;
+	get_infile();
+	get_outfile();
+	allocate_pipes();
+	create_pipes();
+	create_forks();
+	close_pipes();
+	waitpid(-1, NULL, 0);
+}
 
-	if (ac == 5)
-	{
+/* int main(int ac, char **av, char **envp)
+{
 		if (pipe(piepinho) == -1)
 			perror("Erro no piepinho");
 		pid = fork();
@@ -90,7 +82,4 @@ int main(int ac, char **av, char **envp)
 		if (pid == 0)
 			child_process(piepinho, av, envp);
 		parent_process(piepinho, av, envp);
-	}
-	else
-		return (write(2, "Please and only 5 arguments\n", 28));
-}
+} */
