@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/04/29 20:21:54 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/04/30 22:01:58 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int main(int ac, char **av, char **envp)
 	allocate_pipes();
 	create_pipes();
 	create_forks();
+	//printf("Closing Main Pipe\n");
 	close_pipes();
-	waitpid(-1, NULL, 0);
+	//printf("Waiting Pid\n");
+	//waitpid(-1, NULL, 0);
 }
 
 /* int main(int ac, char **av, char **envp)
