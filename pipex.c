@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/04/30 22:01:58 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:03:40 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,28 @@ void	_error(char *s)
 	exit (1);
 }
 
-int main(int ac, char **av, char **envp)
+void	_initialization(int ac, char **av, char **envp)
 {
 	data()->envp = envp;
 	data()->ac = ac;
 	data()->av = av;
+	data()->ncmds = ac - 3;
+	data()->pipes = malloc(sizeof(int) * 2 * (data()->ncmds - 1));
+	if (!data()->pipes)
+		_error("Error in Pipe Memory Allocation");
+	data()->pid = malloc(sizeof(int) * data()->ncmds);
+	if (!data()->pid)
+		_error("error in pid memory allocation");
 	get_infile();
 	get_outfile();
-	allocate_pipes();
+}
+
+int main(int ac, char **av, char **envp)
+{
+	_initialization(ac, av, envp);
 	create_pipes();
-	create_forks();
+	_process();
 	//printf("Closing Main Pipe\n");
-	close_pipes();
 	//printf("Waiting Pid\n");
 	//waitpid(-1, NULL, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:08:17 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/04/30 21:56:19 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:15:14 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,51 @@ void	get_outfile(void)
 		_error("Outfile Error");
 }
 
-char	*path_finder(char *cmd, char **envp)
+char	*get_env_path(char **envp)
+{
+	char	*path;
+	int		i;
+
+	i = 0;
+	path = NULL;
+	while (envp[i] != NULL && envp[i][0] != '\0')
+	{
+		path = ft_strnstr(envp[i], "PATH=", 5);
+		if (path)
+		{
+			path = ft_substr(path, 5, ft_strlen(path));
+			break ;
+		}
+		i++;
+	}
+	return (path);
+}
+
+char	*path_finder(char *cmd2)
 {
 	char *sub;
 	char **paths;
 	char *cmd_path;
+	int	i;
+	char *cmd;
+
+	cmd = cmd2;
 
 	cmd = *ft_split(cmd, ' ');
-	while (*data()->envp && !ft_strnstr(*data()->envp, "PATH=", 5))
-		envp++;
-	sub = ft_substr(*data()->envp, 5, ft_strlen(*data()->envp) - 5);
+	sub = get_env_path(data()->envp);
 	paths = ft_split(sub, ':');
 	free(sub);
 	sub = ft_strjoin("/", cmd);
-	while (*paths)
+	i = 0;
+	while (paths[i])
 	{
-		cmd_path = ft_strjoin(*paths, sub);
+		cmd_path = ft_strjoin(paths[i], sub);
 		if (!cmd_path)
 			return (NULL);
 		if (!access(cmd_path, F_OK))
 			break ;
 		free(cmd_path);
-		paths++;
+		i++;
 	}
 	free(sub);
 	free(cmd);

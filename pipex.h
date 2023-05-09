@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:16:43 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/04/29 20:25:14 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:00:27 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ typedef struct s_data {
 	char **envp;
 	int	infile;
 	int	outfile;
-	pid_t	pid;
+	int	*pid;
 	int	*pipes;
-	int	pipe_quantity;
-	int	pipe_order;
-	int cmds;
+	int ncmds;
+	int nchild;
+	int nparent;
+	char **cmd_commands;
+	char *cmd_path;
+	int	is_doc;
 } t_data;
 
 t_data *data(void);
@@ -41,6 +44,7 @@ void	allocate_pipes();
 void	create_pipes();
 void	close_pipes();
 void	create_forks();
-char	*path_finder();
+char	*path_finder(char *cmd);
+void	_process();
 
 #endif
