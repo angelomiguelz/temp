@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:53:24 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/09 16:24:13 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:17:59 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	_process()
 	while (data()->nchild < data()->ncmds)
 	{
 		printf("Child n: %i\n", data()->nchild);
-		data()->cmd_commands = ft_split(data()->av[data()->nchild + 2], ' ');
+		data()->cmd_commands = ft_split(data()->av[data()->nchild + 2 + data()->is_doc], ' ');
 		if (!data()->cmd_commands)
 			_error("Error in Cmd Commands Splitting");
 		data()->cmd_path = path_finder(data()->cmd_commands[0]);

@@ -56,5 +56,10 @@ fclean: clean
 		make fclean -C $(FT_PRINTF_PATH)
 		make fclean -C $(LIBFT_PATH)
 	$(RM)	$(NAME)
+other:	fclean
+		@rm infile
+		@rm outfile
+		@rm -rf pipex.dSYM
+		@echo "cleaned...."
 
 re:	fclean	$(NAME)

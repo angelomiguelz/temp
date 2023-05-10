@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:08:17 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/09 15:15:14 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:00:55 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,12 @@ char	*get_env_path(char **envp)
 	return (path);
 }
 
-char	*path_finder(char *cmd2)
+char	*path_finder(char *cmd)
 {
 	char *sub;
 	char **paths;
 	char *cmd_path;
 	int	i;
-	char *cmd;
-
-	cmd = cmd2;
 
 	cmd = *ft_split(cmd, ' ');
 	sub = get_env_path(data()->envp);
@@ -70,11 +67,13 @@ char	*path_finder(char *cmd2)
 		if (!cmd_path)
 			return (NULL);
 		if (!access(cmd_path, F_OK))
-			break ;
+		{
+			free(sub);
+			free(cmd);
+			return (cmd_path) ;
+		}
 		free(cmd_path);
 		i++;
 	}
-	free(sub);
-	free(cmd);
-	return (cmd_path);	
+	return (cmd);
 }

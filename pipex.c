@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/09 16:03:40 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:20:23 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,6 @@ int main(int ac, char **av, char **envp)
 	_initialization(ac, av, envp);
 	create_pipes();
 	_process();
-	//printf("Closing Main Pipe\n");
-	//printf("Waiting Pid\n");
-	//waitpid(-1, NULL, 0);
 }
 
 /* int main(int ac, char **av, char **envp)
