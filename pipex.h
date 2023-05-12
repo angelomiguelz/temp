@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:16:43 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/11 13:38:09 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:06:51 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/wait.h>
 # include <fcntl.h>
 # include "./ft_printf/ft_printf.h"
 # include "./libft/libft.h"

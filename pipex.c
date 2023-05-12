@@ -6,45 +6,11 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/09 17:20:23 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:07:57 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-/* void	pexit(char *s)
-{
-	perror(s);
-	exit(1);
-}
-
-void	parent_process(int *piepinho, char **av, char **envp)
-{
-	int outfile;
-
-	outfile = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (outfile == -1)
-		pexit("erro no outfile parent process");
-	dup2(outfile, STDOUT_FILENO);
-	dup2(piepinho[0], STDIN_FILENO);
-	close(piepinho[1]);
-	if (execve(path_finder(av[3], envp), ft_split(av[3], ' '), envp) == -1)
-		exit(1);
-}
-
-void	child_process(int *piepinho, char **av, char **envp)
-{
-	int infile;
-
-	infile = open(av[1], O_CREAT | O_RDONLY, 0644);
-	if (infile == -1)
-		perror("erro no infile child process");
-	dup2(piepinho[1], STDOUT_FILENO);
-	dup2(infile, STDIN_FILENO);
-	close(piepinho[0]);
-	if (execve(path_finder(av[2], envp), ft_split(av[2], ' '), envp) == -1)
-		exit(1);
-} */
 
 t_data *data(void)
 {

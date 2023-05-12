@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:08:17 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/11 13:43:50 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:56:50 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	get_infile(void)
 {
-	//printf("Getting infile\n");
 	data()->infile = open(data()->av[1], O_CREAT | O_RDONLY, 0644);
 	if (data()->infile < 0)
 		_error("Infile Error"); 
@@ -22,7 +21,6 @@ void	get_infile(void)
 
 void	get_outfile(void)
 {
-	//printf("Getting outfile\n");
 	data()->outfile = open(data()->av[data()->ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data()->outfile < 0)
 		_error("Outfile Error");
@@ -50,29 +48,27 @@ char	*get_env_path(char **envp)
 
 char	*path_finder(char *cmd)
 {
-	char *sub;
 	char **paths;
 	char *cmd_path;
 	int	i;
+	char *env;
 
-	sub = get_env_path(data()->envp);
-	paths = ft_split(sub, ':');
-	free(sub);
-	sub = ft_strjoin("/", cmd);
+	env = get_env_path(data()->envp);
+	paths = ft_split(env, ':');
+	free(env);
+	cmd = ft_strjoin("/", cmd);
 	i = 0;
 	while (paths[i])
 	{
-		cmd_path = ft_strjoin(paths[i], sub);
-		if (!cmd_path)
-			return (NULL);
+		cmd_path = ft_strjoin(paths[i], cmd);
 		if (!access(cmd_path, F_OK))
 		{
-			free(sub);
-			free(cmd);
-			return (cmd_path) ;
+			_free(cmd, paths);
+			return(cmd_path);
 		}
 		free(cmd_path);
 		i++;
 	}
+	_free(NULL, paths);
 	return (cmd);
 }
