@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:08:17 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/09 19:00:55 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/11 13:43:50 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ char	*path_finder(char *cmd)
 	char *cmd_path;
 	int	i;
 
-	cmd = *ft_split(cmd, ' ');
 	sub = get_env_path(data()->envp);
 	paths = ft_split(sub, ':');
 	free(sub);

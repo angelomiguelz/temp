@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:53:24 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/09 17:17:59 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:06:35 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	_free(char *string, char **matrix)
 			free(matrix[i]);
 	}
 	free(matrix);
-	matrix = NULL;
 }
 
 void	_close()
@@ -90,18 +89,18 @@ void	_process()
 	data()->nchild = 0;
 	while (data()->nchild < data()->ncmds)
 	{
-		printf("Child n: %i\n", data()->nchild);
+		//printf("Child n: %i\n", data()->nchild);
 		data()->cmd_commands = ft_split(data()->av[data()->nchild + 2 + data()->is_doc], ' ');
 		if (!data()->cmd_commands)
 			_error("Error in Cmd Commands Splitting");
 		data()->cmd_path = path_finder(data()->cmd_commands[0]);
-		printf("CMD PATH: %s\n", data()->cmd_path);
+		//printf("CMD PATH: %s\n", data()->cmd_path);
 		data()->pid[data()->nchild] = fork();
 		if (data()->pid[data()->nchild] == -1)
 			_error("error in pid");
 		else if (data()->pid[data()->nchild] == 0)
 		{
-			printf("Enter child\n");
+			//printf("Enter child\n");
 			_child();
 		}
 		_free(data()->cmd_path, data()->cmd_commands);
