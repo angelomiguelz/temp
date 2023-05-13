@@ -6,15 +6,16 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 18:45:59 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 19:12:08 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_data *data(void)
+t_data	*data(void)
 {
-	static t_data data;
+	static t_data	data;
+
 	return (&data);
 }
 
@@ -39,13 +40,13 @@ void	_process(void)
 	pid = fork();
 	if (pid == -1)
 		_error();
-	if (pid == 0) //child
+	if (pid == 0)
 	{
 		close(fds[0]);
 		dup2(fds[1], STDOUT_FILENO);
 		_executer();
 	}
-	else //parent
+	else
 	{
 		close(fds[1]);
 		dup2(fds[0], STDIN_FILENO);
@@ -69,7 +70,7 @@ void	_executer(void)
 		_error();
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	if (ac == 5)
 	{

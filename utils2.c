@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 17:04:07 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 18:49:50 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 19:14:39 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	_cmd_check(void)
 	int	i;
 
 	i = 2;
-	while (i < data()->ac - 1) 
+	while (i < data()->ac - 1)
 	{
 		if (!ft_strlen(data()->av[i]))
 		{

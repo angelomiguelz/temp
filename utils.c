@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:53:24 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 18:55:53 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 19:14:34 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ char	*path_finder(char *cmd)
 
 void	get_infile(void)
 {
-	data()->infile = open(data()->av[1], O_RDONLY, 0644);
+	(data()->infile) = open(data()->av[1], O_RDONLY, 0644);
 	if (data()->infile < 0)
 		_error();
 }
 
 void	get_outfile(void)
 {
-	data()->outfile = open(data()->av[data()->ac - 1],
-			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	(data()->outfile) = open(data()->av[data()->ac - 1], \
+		O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data()->outfile < 0)
 		_error();
 }
