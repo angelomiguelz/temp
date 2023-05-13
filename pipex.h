@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:16:43 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/12 14:06:51 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 16:05:33 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	create_forks();
 char	*path_finder(char *cmd);
 void	_process();
 void	_free(char *string, char **matrix);
+void	usage(void);
 
 #endif

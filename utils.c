@@ -6,11 +6,19 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:53:24 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/12 14:55:24 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 16:03:56 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	usage(void)
+{
+	ft_putstr_fd("\033[31mError: Bad argument\n\e[0m", 2);
+	ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 1);
+	ft_putstr_fd("    ./pipex \"here_doc\" <LIMITER> <cmd> <cmd1> <...> <file>\n", 1);
+	exit(EXIT_SUCCESS);
+}
 
 void	my_dup(int input, int output)
 {

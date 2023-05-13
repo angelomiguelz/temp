@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/12 14:07:57 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 16:11:04 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,14 @@ void	_initialization(int ac, char **av, char **envp)
 
 int main(int ac, char **av, char **envp)
 {
-	_initialization(ac, av, envp);
+	int	i;
+
+	i = 2;
+	if (ac >= 5)
+	{
+		_initialization(ac, av, envp);
+			
+	}
 	create_pipes();
 	_process();
 }
