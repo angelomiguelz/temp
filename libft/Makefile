@@ -6,7 +6,7 @@
 #    By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/25 13:21:14 by mzarichn          #+#    #+#              #
-#    Updated: 2023/03/13 13:02:15 by mzarichn         ###   ########.fr        #
+#    Updated: 2023/05/13 17:57:36 by mzarichn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ YELLOW = \033[0;93m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@make  -s -C $(FT_PRINTF_PATH)
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
 	@echo "$(GREEN)$(NAME) created!$(DEFAULT)"
@@ -62,13 +61,11 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 	
 clean:
-				@make clean  -s -C $(FT_PRINTF_PATH)
 				@rm -rf $(OBJ_PATH)
 				@echo "$(YELLOW)$(NAME) files are removed$(DEFAULT)"
 
 fclean:			clean
 				@rm -rf objects
-				@make fclean  -s -C $(FT_PRINTF_PATH)
 				@rm -f $(NAME)
 				@echo "$(RED)$(NAME) is deleted$(DEFAULT)"
 

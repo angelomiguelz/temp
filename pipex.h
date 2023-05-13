@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:16:43 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 16:05:33 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 18:23:47 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include "./ft_printf/ft_printf.h"
 # include "./libft/libft.h"
 
 typedef struct s_data {
@@ -27,27 +26,21 @@ typedef struct s_data {
 	char **envp;
 	int	infile;
 	int	outfile;
-	int	*pid;
-	int	*pipes;
-	int ncmds;
 	int nchild;
-	int nparent;
 	char **cmd_commands;
 	char *cmd_path;
-	int	is_doc;
 } t_data;
 
 t_data *data(void);
-void	_error(char *s);
+void	_error(void);
 void	get_infile(void);
 void	get_outfile(void);
-void	allocate_pipes();
-void	create_pipes();
-void	close_pipes();
-void	create_forks();
 char	*path_finder(char *cmd);
 void	_process();
 void	_free(char *string, char **matrix);
-void	usage(void);
+void	_usage(void);
+void	_executer(void);
+void	_error(void);
+void	_cmd_check(void);
 
 #endif

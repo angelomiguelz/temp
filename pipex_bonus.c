@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 18:45:59 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 18:50:20 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,9 @@ void	_executer(void)
 
 int main(int ac, char **av, char **envp)
 {
-	if (ac == 5)
+	if (ac >= 5)
 	{
 		_initialization(ac, av, envp);
-		dup2(data()->infile, STDIN_FILENO);
 		while (++data()->nchild < data()->ac - 2)
 			_process();
 		dup2(data()->outfile, STDOUT_FILENO);

@@ -6,108 +6,70 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:53:24 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 16:03:56 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/13 18:55:53 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	usage(void)
+char	*get_env_path(char **envp)
 {
-	ft_putstr_fd("\033[31mError: Bad argument\n\e[0m", 2);
-	ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 1);
-	ft_putstr_fd("    ./pipex \"here_doc\" <LIMITER> <cmd> <cmd1> <...> <file>\n", 1);
-	exit(EXIT_SUCCESS);
-}
+	char	*path;
+	int		i;
 
-void	my_dup(int input, int output)
-{
-	if (dup2(input, STDIN_FILENO) == -1)
-		_error("In Dup2");
-	if (dup2(output, STDOUT_FILENO) == -1)
-		_error("In Dup2");
-}
-
-void	_free(char *string, char **matrix)
-{
-	int	i;
-
-	i = -1;
-	if (string != NULL)
+	i = 0;
+	path = NULL;
+	while (envp[i] != NULL && envp[i][0] != '\0')
 	{
-		free(string);
-		string = NULL;
+		path = ft_strnstr(envp[i], "PATH=", 5);
+		if (path)
+		{
+			path = ft_substr(path, 5, ft_strlen(path));
+			break ;
+		}
+		i++;
 	}
-	if (matrix != NULL)
+	return (path);
+}
+
+char	*path_finder(char *cmd)
+{
+	char	**paths;
+	char	*cmd_path;
+	int		i;
+	char	*env;
+
+	env = get_env_path(data()->envp);
+	paths = ft_split(env, ':');
+	free(env);
+	cmd = ft_strjoin("/", cmd);
+	i = 0;
+	while (paths[i])
 	{
-		while (matrix[++i])
-			free(matrix[i]);
+		cmd_path = ft_strjoin(paths[i], cmd);
+		if (!access(cmd_path, F_OK))
+		{
+			_free(cmd, paths);
+			return (cmd_path);
+		}
+		free(cmd_path);
+		i++;
 	}
-	free(matrix);
+	_free(NULL, paths);
+	return (cmd);
 }
 
-void	_close()
+void	get_infile(void)
 {
-	int i;
-
-	if (data()->infile != -1)
-		close(data()->infile);
-	if (data()->outfile != -1)
-		close(data()->outfile);
-	i = -1;
-	while (++i < (data()->ncmds - 1) * 2)
-		close(data()->pipes[i]);
+	data()->infile = open(data()->av[1], O_RDONLY, 0644);
+	if (data()->infile < 0)
+		_error();
 }
 
-void	_child()
+void	get_outfile(void)
 {
-	if (data()->nchild == 0)
-		my_dup(data()->infile, data()->pipes[1]);
-	else if (data()->nchild == data()->ncmds - 1)
-		my_dup(data()->pipes[2 * data()->nchild - 2], data()->outfile);
-	else
-		my_dup(data()->pipes[2 * data()->nchild - 2], data()->pipes[2 * data()->nchild + 1]);
-	_close();
-	if (execve(data()->cmd_path, data()->cmd_commands, data()->envp) == -1)
-		_error("Error in Child Process");
-}
-
-void	_parent()
-{
-	pid_t	wpid;
-	int		status;
-	int		exit_code;
-
-	_close();
-	exit_code = 1;
-	while (--data()->nchild >= 0)
-	{
-		wpid = waitpid(data()->pid[data()->nchild], &status, 0);
-		if (wpid == data()->pid[data()->ncmds - 1])
-			if ((data()->nchild == (data()->ncmds - 1)) && WIFEXITED(status))
-				exit_code = WEXITSTATUS(status);
-	}
-	free(data()->pipes);
-	free(data()->pid);
-	(void)exit_code;
-}
-
-void	_process()
-{
-	data()->nchild = 0;
-	while (data()->nchild < data()->ncmds)
-	{
-		data()->cmd_commands = ft_split(data()->av[data()->nchild + 2 + data()->is_doc], ' ');
-		if (!data()->cmd_commands)
-			_error("Error in Cmd Commands Splitting");
-		data()->cmd_path = path_finder(data()->cmd_commands[0]);
-		data()->pid[data()->nchild] = fork();
-		if (data()->pid[data()->nchild] == -1)
-			_error("error in pid");
-		else if (data()->pid[data()->nchild] == 0)
-			_child();
-		_free(data()->cmd_path, data()->cmd_commands);
-		data()->nchild++;
-	}
-	_parent();
+	data()->outfile = open(data()->av[data()->ac - 1],
+			O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (data()->outfile < 0)
+		_error();
 }
