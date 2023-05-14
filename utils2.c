@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 17:04:07 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 19:14:39 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/14 14:18:13 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	_error(void)
 {
+	close(data()->infile);
+	close(data()->outfile);
 	perror("Error");
 	exit(1);
 }

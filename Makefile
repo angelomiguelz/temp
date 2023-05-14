@@ -8,7 +8,7 @@ SRC_BONUS = pipex_bonus.c utils.c utils2.c
 OBJS_BONUS = $(SRC_BONUS:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 RM = rm -f
 
 LIBFT = ./libft/libft.a
@@ -38,6 +38,8 @@ re:	fclean	$(NAME)
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(SRC_BONUS)
-	make re -C $(LIBFT_PATH)
+	make -C $(LIBFT_PATH)
 	$(CC) $(CFLAGS) $(SRC_BONUS) $(INC) $(LIBFT) -o $(NAME)
 	clear
+
+rebonus: fclean $(NAME_BONUS) 

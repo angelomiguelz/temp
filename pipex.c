@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 19:12:08 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/14 14:33:19 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,16 @@ void	_executer(void)
 	path = path_finder(cmd[0]);
 	if (!path)
 	{
+		ft_putstr_fd("path\n", 2);
+
 		_free(path, cmd);
 		_error();
 	}
 	if (execve(path, cmd, data()->envp) == -1)
+	{
+		ft_putstr_fd("executer\n", 2);
 		_error();
+	}
 }
 
 int	main(int ac, char **av, char **envp)
