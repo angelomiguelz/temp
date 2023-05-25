@@ -6,40 +6,51 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:53:24 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/14 14:26:43 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:05:08 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*get_env_path(char **envp)
+char	*path_finder(char *cmd, char **envp)
 {
+	char	**paths;
 	char	*path;
 	int		i;
+	char	*part_path;
 
 	i = 0;
-	path = NULL;
-	while (envp[i] != NULL && envp[i][0] != '\0')
+	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+		i++;
+	paths = ft_split(envp[i] + 5, ':');
+	i = 0;
+	while (paths[i])
 	{
-		path = ft_strnstr(envp[i], "PATH=", 5);
-		if (path)
-		{
-			path = ft_substr(path, 5, ft_strlen(path));
-			break ;
-		}
+		part_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(part_path, cmd);
+		free(part_path);
+		if (access(path, F_OK) == 0)
+			return (path);
+		free(path);
 		i++;
 	}
-	return (path);
+	i = -1;
+	while (paths[++i])
+		free(paths[i]);
+	free(paths);
+	return (0);
 }
 
-char	*path_finder(char *cmd)
+/* char	*path_finder(char *cmd)
 {
 	char	**paths;
 	char	*cmd_path;
 	int		i;
 	char	*env;
 
-	env = get_env_path(data()->envp);
+	i = 0;
+	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+		i++;
 	paths = ft_split(env, ':');
 	free(env);
 	cmd = ft_strjoin("/", cmd);
@@ -57,7 +68,7 @@ char	*path_finder(char *cmd)
 	}
 	_free(NULL, paths);
 	return (cmd);
-}
+} */
 
 void	get_infile(void)
 {

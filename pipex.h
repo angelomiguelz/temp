@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:16:43 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/13 19:12:13 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:12:00 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ t_data		*data(void);
 void		_error(void);
 void		get_infile(void);
 void		get_outfile(void);
-char		*path_finder(char *cmd);
+char		*path_finder(char *cmd, char **envp);
 void		_process(void);
 void		_free(char *string, char **matrix);
 void		_usage(void);
 void		_executer(void);
 void		_error(void);
 void		_cmd_check(void);
+char	*find_path(char *cmd, char **envp);
 
 #endif

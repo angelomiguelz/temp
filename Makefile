@@ -1,7 +1,7 @@
 NAME = pipex
 NAME_BONUS = pipex_bonus
 
-SRC = pipex.c utils.c utils2.c
+SRC = utils.c utils2.c pipex.c
 OBJS = $(SRC:.c=.o)
 
 SRC_BONUS = pipex_bonus.c utils.c utils2.c
@@ -39,6 +39,7 @@ bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): $(SRC_BONUS)
 	make -C $(LIBFT_PATH)
+	make re
 	$(CC) $(CFLAGS) $(SRC_BONUS) $(INC) $(LIBFT) -o $(NAME)
 	clear
 

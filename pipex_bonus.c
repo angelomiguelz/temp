@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/14 14:33:49 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:12:09 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,28 @@ void	_process(void)
 		waitpid(pid, NULL, 0);
 	}
 }
+void	_process2(void)
+{
+	int		fds[2];
+
+	if (pipe(fds) == -1)
+		_error();
+}
 
 void	_executer(void)
 {
 	char	*path;
 	char	**cmd;
+	int i;
 
 	cmd = ft_split(data()->av[data()->nchild], ' ');
-	path = path_finder(cmd[0]);
+	i = -1;
+	path = path_finder(cmd[0], data()->envp);
 	if (!path)
 	{
-		_free(path, cmd);
+		while (cmd[++i])
+			free(cmd[i]);
+		free(cmd);
 		_error();
 	}
 	if (execve(path, cmd, data()->envp) == -1)
@@ -76,10 +87,13 @@ int	main(int ac, char **av, char **envp)
 	{
 		_initialization(ac, av, envp);
 		dup2(data()->infile, STDIN_FILENO);
-		while (++data()->nchild < data()->ac - 2)
+		while (++data()->nchild < (data()->ac - 2))
 			_process();
 		dup2(data()->outfile, STDOUT_FILENO);
+		data()->nchild = (data()->ac -2);
 		_executer();
+		_process2();
 	}
 	_usage();
 }
+//./pipex infile cat cat outfile
