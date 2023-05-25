@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:16:43 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/24 15:12:00 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:04:23 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char		*path_finder(char *cmd, char **envp);
 void		_process(void);
 void		_free(char *string, char **matrix);
 void		_usage(void);
-void		_executer(void);
+int		_executer(void);
 void		_error(void);
 void		_cmd_check(void);
 char	*find_path(char *cmd, char **envp);

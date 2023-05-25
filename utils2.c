@@ -6,13 +6,13 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 17:04:07 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/24 14:56:59 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:53:27 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	_error()
+void	_error(void)
 {
 	perror("Error");
 	exit(1);

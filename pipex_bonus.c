@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/25 15:12:09 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:12:22 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ void	_process(void)
 	{
 		close(fds[0]);
 		dup2(fds[1], STDOUT_FILENO);
-		_executer();
+		if (!_executer())
+		{
+			close(data()->infile);
+			close(data()->outfile);
+			_error();
+		}
 	}
 	else
 	{
@@ -53,32 +58,17 @@ void	_process(void)
 		waitpid(pid, NULL, 0);
 	}
 }
-void	_process2(void)
-{
-	int		fds[2];
 
-	if (pipe(fds) == -1)
-		_error();
-}
-
-void	_executer(void)
+int	_executer(void)
 {
 	char	*path;
 	char	**cmd;
-	int i;
 
 	cmd = ft_split(data()->av[data()->nchild], ' ');
-	i = -1;
 	path = path_finder(cmd[0], data()->envp);
-	if (!path)
-	{
-		while (cmd[++i])
-			free(cmd[i]);
-		free(cmd);
-		_error();
-	}
 	if (execve(path, cmd, data()->envp) == -1)
-		_error();
+		return (0);
+	return (1);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -90,10 +80,8 @@ int	main(int ac, char **av, char **envp)
 		while (++data()->nchild < (data()->ac - 2))
 			_process();
 		dup2(data()->outfile, STDOUT_FILENO);
-		data()->nchild = (data()->ac -2);
 		_executer();
-		_process2();
+		return (0);
 	}
 	_usage();
 }
-//./pipex infile cat cat outfile
