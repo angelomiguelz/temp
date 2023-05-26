@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 19:53:24 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/25 16:00:28 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:26:13 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	get_infile(void)
 {
 	(data()->infile) = open(data()->av[1], O_RDONLY, 0644);
 	if (data()->infile < 0)
-		_error();
+		perror("INFILE ERROR");
 }
 
 void	get_outfile(void)
@@ -54,5 +54,5 @@ void	get_outfile(void)
 								O_CREAT | O_RDWR | O_TRUNC,
 								0644);
 	if (data()->outfile < 0)
-		_error();
+		perror("OUTFILE ERROR");
 }

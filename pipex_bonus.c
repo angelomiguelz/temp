@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/25 16:12:22 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:58:08 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,26 @@ void	_process(void)
 	int		fds[2];
 
 	if (pipe(fds) == -1)
-		_error();
+		_error("Error in Pipe\n");
 	pid = fork();
 	if (pid == -1)
-		_error();
+		_error("Error in Fork\n");
 	if (pid == 0)
 	{
 		close(fds[0]);
 		dup2(fds[1], STDOUT_FILENO);
-		if (!_executer())
-		{
-			close(data()->infile);
-			close(data()->outfile);
-			_error();
-		}
+		close(fds[1]);
+		_executer();
 	}
 	else
 	{
 		close(fds[1]);
 		dup2(fds[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
+		close(fds[0]);
 	}
 }
 
-int	_executer(void)
+void	_executer(void)
 {
 	char	*path;
 	char	**cmd;
@@ -67,8 +63,13 @@ int	_executer(void)
 	cmd = ft_split(data()->av[data()->nchild], ' ');
 	path = path_finder(cmd[0], data()->envp);
 	if (execve(path, cmd, data()->envp) == -1)
-		return (0);
-	return (1);
+	{
+		free(cmd);
+		free(path);
+		close(data()->infile);
+		close(data()->outfile);
+		_error("Execve Error\n");
+	}
 }
 
 int	main(int ac, char **av, char **envp)

@@ -6,15 +6,15 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 17:04:07 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/25 15:53:27 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:06:05 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	_error(void)
+void	_error(char *s)
 {
-	perror("Error");
+	ft_putstr_fd(s, 2);
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/25 16:06:22 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:59:14 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	_initialization(int ac, char **av, char **envp)
 	data()->envp = envp;
 	data()->ac = ac;
 	data()->av = av;
-	data()->nchild = -1;
+	data()->nchild = 1;
 	_cmd_check();
 	get_infile();
 	get_outfile();
@@ -36,31 +36,26 @@ void	_process(void)
 	int		fds[2];
 
 	if (pipe(fds) == -1)
-		_error();
+		_error("Error in Pipe\n");
 	pid = fork();
 	if (pid == -1)
-		_error();
+		_error("Error in Fork\n");
 	if (pid == 0)
 	{
 		close(fds[0]);
 		dup2(fds[1], STDOUT_FILENO);
-		if (!_executer())
-		{
-			close(fds[1]);
-			close(data()->infile);
-			close(data()->outfile);
-			_error();
-		}
+		close(fds[1]);
+		_executer();
 	}
 	else
 	{
 		close(fds[1]);
 		dup2(fds[0], STDIN_FILENO);
-		waitpid(pid, NULL, 0);
+		close(fds[0]);
 	}
 }
 
-int	_executer(void)
+void	_executer(void)
 {
 	char	*path;
 	char	**cmd;
@@ -68,8 +63,13 @@ int	_executer(void)
 	cmd = ft_split(data()->av[data()->nchild], ' ');
 	path = path_finder(cmd[0], data()->envp);
 	if (execve(path, cmd, data()->envp) == -1)
-		return (0);
-	return (1);
+	{
+		free(cmd);
+		free(path);
+		close(data()->infile);
+		close(data()->outfile);
+		_error("Execve Error\n");
+	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -78,10 +78,13 @@ int	main(int ac, char **av, char **envp)
 	{
 		_initialization(ac, av, envp);
 		dup2(data()->infile, STDIN_FILENO);
-		while (++data()->nchild < data()->ac - 2)
+		while (++data()->nchild < (data()->ac - 2))
 			_process();
 		dup2(data()->outfile, STDOUT_FILENO);
 		_executer();
+		return (0);
 	}
-	_usage();
+	ft_putstr_fd("Error: Bad Argument Format\n", 2);
+	ft_putstr_fd("Ex: ./pipex infile cmd1 cmd2 outfile\n", 1);
+	exit(1);
 }
