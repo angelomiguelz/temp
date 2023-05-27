@@ -6,7 +6,7 @@
 /*   By: mzarichn <mzarichn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:08:00 by mzarichn          #+#    #+#             */
-/*   Updated: 2023/05/26 15:58:08 by mzarichn         ###   ########.fr       */
+/*   Updated: 2023/05/27 14:16:02 by mzarichn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	_executer(void)
 		free(path);
 		close(data()->infile);
 		close(data()->outfile);
-		_error("Execve Error\n");
+		_error("Execve Error: invalid command\n");
 	}
 }
 
